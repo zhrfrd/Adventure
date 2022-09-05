@@ -6,16 +6,16 @@ public class Main {
 
 	public static void main (String [] args) {
 		JFrame window = new JFrame();
-		GamePanel gamePanel = new GamePanel();
+		GamePanel gp = new GamePanel();
 		
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);
 		window.setTitle("Adventure game");
-		window.add(gamePanel);
+		window.add(gp);
 		window.pack();   // Causes the window to be sized to fit the preferred size and layouts of its subcomponents (GamePanel)
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 		
-		gamePanel.startGameThread();
+		gp.startGameThread();
 	}
 }

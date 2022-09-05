@@ -10,12 +10,15 @@ import zhrfrd.adventure.main.GamePanel;
 import zhrfrd.adventure.main.KeyHandler;
 
 public class Player extends Entity {
-	GamePanel gamePanel;
+	GamePanel gp;
 	KeyHandler keyHandler;
+	public final int SCREEN_X, SCREEN_Y;   // Position of the player of the screen
 	
-	public Player(GamePanel gamePanel, KeyHandler keyHandler) {
-		this.gamePanel = gamePanel;
+	public Player(GamePanel gp, KeyHandler keyHandler) {
+		this.gp = gp;
 		this.keyHandler = keyHandler;
+		SCREEN_X = gp.SCREEN_WIDTH / 2 - (gp.TILE_SIZE / 2);    // Player in the middle of the screen
+		SCREEN_Y = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);   //
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -25,8 +28,8 @@ public class Player extends Entity {
 	 * Set default values of the player when a new instance of Player is created
 	 */
 	public void setDefaultValues() {
-		x = 100;
-		y = 100;
+		worldX = gp.TILE_SIZE * 23;   // Player starting position on the map
+		worldY = gp.TILE_SIZE * 21;   //
 		speed = 4;
 		direction = "down";   // Default direction
 	}
@@ -57,22 +60,22 @@ public class Player extends Entity {
 		if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed) {
 			if (keyHandler.upPressed) {
 				direction = "up";
-				y -= speed;
+				worldY -= speed;
 			}
 			
 			if (keyHandler.downPressed) {
 				direction = "down";
-				y += speed;
+				worldY += speed;
 			}
 			
 			if (keyHandler.leftPressed) {
 				direction = "left";
-				x -= speed;
+				worldX -= speed;
 			}
 			
 			if (keyHandler.rightPressed) {
 				direction = "right";
-				x += speed;
+				worldX += speed;
 			}
 			
 			spriteCounter ++;   // Increase spriteCounter every 0.01666 seconds
@@ -128,6 +131,6 @@ public class Player extends Entity {
 				image = right2;
 		}
 		
-		g2.drawImage(image, x, y, gamePanel.TILE_SIZE, gamePanel.TILE_SIZE, null);
+		g2.drawImage(image, SCREEN_X, SCREEN_Y, gp.TILE_SIZE, gp.TILE_SIZE, null);
 	}
 }

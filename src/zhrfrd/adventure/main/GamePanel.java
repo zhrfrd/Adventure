@@ -11,6 +11,7 @@ import zhrfrd.adventure.entities.Player;
 import zhrfrd.adventure.tiles.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
+	// Screen settings
 	final int ORIGINAL_TILE_SIZE = 16;   // 16x16 pixels tile
 	final int SCALE = 3;   // Re-scale tiles 
 	public final int TILE_SIZE = ORIGINAL_TILE_SIZE * SCALE;   // 48*48 pixels tile
@@ -18,11 +19,17 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int MAX_SCREEN_ROW = 12;   // 
 	public final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;    // 768 pixels
 	public final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;   // 576 pixels
+	//World Settings
+	public final int MAX_WORLD_COL = 50;
+	public final int MAX_WORLD_ROW = 50;
+	public final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL;
+	public final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW;
+	
 	final int FPS = 60;
 	Thread gameThread;
 	KeyHandler keyHandler = new KeyHandler();
 	TileManager tileManager = new TileManager(this);
-	Player player = new Player(this, keyHandler);
+	public Player player = new Player(this, keyHandler);
 	
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
