@@ -1,5 +1,6 @@
 package zhrfrd.adventure.entities;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class Entity {
@@ -9,4 +10,6 @@ public class Entity {
 	public String direction;
 	public int spriteCounter = 0;
 	public int spriteNumber = 1;
+	public Rectangle solidArea;   // Solid area for the collision detection
+	public boolean collisionOn = false;
 }

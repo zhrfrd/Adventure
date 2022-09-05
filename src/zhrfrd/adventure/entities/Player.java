@@ -1,6 +1,7 @@
 package zhrfrd.adventure.entities;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -19,6 +20,8 @@ public class Player extends Entity {
 		this.keyHandler = keyHandler;
 		SCREEN_X = gp.SCREEN_WIDTH / 2 - (gp.TILE_SIZE / 2);    // Player in the middle of the screen
 		SCREEN_Y = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);   //
+		
+		solidArea = new Rectangle(8, 16, 32, 32);   // Rectangle solid area of the player
 		
 		setDefaultValues();
 		getPlayerImage();
@@ -58,24 +61,34 @@ public class Player extends Entity {
 	public void update() {
 		// Get keyboard strokes and update player position
 		if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed) {
-			if (keyHandler.upPressed) {
+			if (keyHandler.upPressed)
 				direction = "up";
-				worldY -= speed;
-			}
 			
-			if (keyHandler.downPressed) {
+			if (keyHandler.downPressed)
 				direction = "down";
-				worldY += speed;
-			}
 			
-			if (keyHandler.leftPressed) {
+			if (keyHandler.leftPressed)
 				direction = "left";
-				worldX -= speed;
-			}
 			
-			if (keyHandler.rightPressed) {
+			if (keyHandler.rightPressed)
 				direction = "right";
-				worldX += speed;
+			
+			collisionOn = false;
+			gp.collisionChecker.checkTile(this);   // Check the tile collision
+			
+			// Move the player only in case there is no collision detected
+			if (collisionOn == false) {
+				if (direction == "up")
+					worldY -= speed;
+				
+				if (direction == "down")
+					worldY += speed;
+					
+				if (direction == "left")
+					worldX -= speed;
+					
+				if (direction == "right")
+					worldX += speed;
 			}
 			
 			spriteCounter ++;   // Increase spriteCounter every 0.01666 seconds

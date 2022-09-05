@@ -12,8 +12,8 @@ import zhrfrd.adventure.main.GamePanel;
 
 public class TileManager {
 	GamePanel gp;
-	Tile[] tile;
-	int mapTileNum[][];
+	public Tile[] tile;
+	public int mapTileNum[][];
 	
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
@@ -38,9 +38,12 @@ public class TileManager {
 			
 			tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
 			tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/wall.png"));
+			tile[1].solid = true;
 			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/water.png"));
+			tile[2].solid = true;
 			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/earth.png"));
 			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree.png"));
+			tile[4].solid = true;
 			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand.png"));
 		} catch(IOException e) {
 			e.printStackTrace();
