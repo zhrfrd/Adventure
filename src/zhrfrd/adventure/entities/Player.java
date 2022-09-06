@@ -14,6 +14,7 @@ public class Player extends Entity {
 	GamePanel gp;
 	KeyHandler keyHandler;
 	public final int SCREEN_X, SCREEN_Y;   // Position of the player of the screen
+	int keyCount = 0;
 	
 	public Player(GamePanel gp, KeyHandler keyHandler) {
 		this.gp = gp;
@@ -22,7 +23,8 @@ public class Player extends Entity {
 		SCREEN_Y = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);   //
 		
 		solidArea = new Rectangle(8, 16, 32, 32);   // Rectangle solid area of the player
-		
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
 		setDefaultValues();
 		getPlayerImage();
 	}
@@ -76,6 +78,11 @@ public class Player extends Entity {
 			collisionOn = false;
 			gp.collisionChecker.checkTile(this);   // Check the tile collision
 			
+			int objIndex = gp.collisionChecker.checkObject(this, true);   // Check if player collided with an object and save the object index
+			
+			if (objIndex != 999)   // If the player collided with an existing object, pick it up
+				pickUpObject(objIndex);
+			
 			// Move the player only in case there is no collision detected
 			if (collisionOn == false) {
 				if (direction == "up")
@@ -107,7 +114,31 @@ public class Player extends Entity {
 	}
 	
 	/*
-	 * Re-sraw player each update
+	 * Remove object from the map and add it to the player inventory
+	 */
+	public void pickUpObject(int index) {
+		String objectName = gp.obj[index].name;
+		
+		switch (objectName) {
+			case "Key":
+				keyCount ++;
+				gp.obj[index] = null;
+				
+				break;
+				
+			case "Door":   // Open doors only when you pick up the key
+				if (keyCount > 0) {
+					gp.obj[index] = null;
+					keyCount --;
+				}
+					
+				break;
+		
+		}
+	}
+	
+	/*
+	 * Re-draw player each update
 	 */
 	public void draw(Graphics2D g2) {
 		BufferedImage image = null;

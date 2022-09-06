@@ -66,4 +66,76 @@ public class CollisionChecker {
 				entity.collisionOn = true;
 		}
 	}
+	
+	/*
+	 * Check object for collision detection and check if the entity that collided with the object is a player or not. Return the index of the object in order to process the reaction accordingly
+	 */
+	public int checkObject(Entity entity, boolean player) {
+		int index = 999;   // Default index (not associated to any object)
+		
+		for (int i = 0; i < gp.obj.length; i ++) {
+			if (gp.obj[i] != null) {
+				entity.solidArea.x = entity.worldX + entity.solidArea.x;   // Get entity's solid area position 
+				entity.solidArea.y = entity.worldY + entity.solidArea.y;   //
+				gp.obj[i].solidArea.x = gp.obj[i].worldX + gp.obj[i].solidArea.x;   // Get object solid area position
+				gp.obj[i].solidArea.y = gp.obj[i].worldY + gp.obj[i].solidArea.y;   //
+				
+				// Predict solid area position to check if it will collide with an object
+				if (entity.direction == "up") {
+					entity.solidArea.y -= entity.speed;
+					
+					if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
+						if (gp.obj[i].solid)
+							entity.collisionOn = true;
+						
+						if (player)   // Only player can interact with the object.
+							index = i;
+					}	
+				}
+				
+				if (entity.direction == "down") {
+					entity.solidArea.y += entity.speed;
+					
+					if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
+						if (gp.obj[i].solid)
+							entity.collisionOn = true;
+						
+						if (player)   // Only player can interact with the object.
+							index = i;
+					}	
+				}
+				
+				if (entity.direction == "left") {
+					entity.solidArea.x -= entity.speed;
+					
+					if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
+						if (gp.obj[i].solid)
+							entity.collisionOn = true;
+						
+						if (player)   // Only player can interact with the object. index is used to indicate that an object has been picked up by the player
+							index = i;
+					}	
+				}
+				
+				if (entity.direction == "right") {
+					entity.solidArea.x -= entity.speed;
+					
+					if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
+						if (gp.obj[i].solid)
+							entity.collisionOn = true;
+						
+						if (player)   // Only player can interact with the object.
+							index = i;
+					}	
+				}
+				
+				entity.solidArea.x = entity.solidAreaDefaultX;         // Reset the solid area position to the default value (remember that NOW solidArea position is the one predicted for the imminent collision with an object)
+				entity.solidArea.y = entity.solidAreaDefaultY;         //
+				gp.obj[i].solidArea.x = gp.obj[i].solidAreaDefaultX;   //
+				gp.obj[i].solidArea.y = gp.obj[i].solidAreaDefaultY;   //
+			}
+		}
+		
+		return index;
+	}
 }

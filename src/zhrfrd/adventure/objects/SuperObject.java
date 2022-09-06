@@ -1,6 +1,7 @@
 package zhrfrd.adventure.objects;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import zhrfrd.adventure.main.GamePanel;
@@ -10,6 +11,9 @@ public class SuperObject {
 	public String name;
 	public boolean solid = false;
 	public int worldX, worldY;
+	public Rectangle solidArea = new Rectangle(0, 0, 48, 48);   // Default solid area for the super object which covers the whole sprite area. Can be changed inside the specific object class 
+	public int solidAreaDefaultX = 0;
+	public int solidAreaDefaultY = 0;
 	
 	/*
 	 * Draw the objects on the screen
