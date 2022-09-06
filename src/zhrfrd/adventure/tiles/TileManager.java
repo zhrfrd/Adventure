@@ -98,7 +98,7 @@ public class TileManager {
 			int screenX = worldX - gp.player.worldX + gp.player.SCREEN_X;   // Tiles position on the screen
 			int screenY = worldY - gp.player.worldY + gp.player.SCREEN_Y;   //
 			
-			// Render only the tiles visible on the screen
+			// Render only the tiles visible on the screen plus one extra tile in order to not show black edges when moving
 			if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.SCREEN_X && 
 					worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.SCREEN_X && 
 					worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.SCREEN_Y && 

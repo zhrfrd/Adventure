@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import zhrfrd.adventure.entities.Player;
+import zhrfrd.adventure.objects.SuperObject;
 import zhrfrd.adventure.tiles.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -31,6 +32,8 @@ public class GamePanel extends JPanel implements Runnable {
 	TileManager tileManager = new TileManager(this);
 	public CollisionChecker collisionChecker = new CollisionChecker(this);
 	public Player player = new Player(this, keyHandler);
+	public SuperObject obj[] = new SuperObject[10];
+	public AssetSetter assetSetter= new AssetSetter(this);
 	
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -38,6 +41,13 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyHandler);
 		this.setFocusable(true);
+	}
+	
+	/*
+	 * Setup up game objects and more
+	 */
+	public void setupGame() {
+		assetSetter.setObject();
 	}
 	
 	/*
@@ -63,7 +73,16 @@ public class GamePanel extends JPanel implements Runnable {
 		super.paintComponent(g);   // Must be done for the JPanel painting takes place
 		
 		Graphics2D g2 = (Graphics2D)g;
+		
+		// Draw tiles
 		tileManager.draw(g2);
+		
+		// Draw objects
+		for (int i = 0; i < obj.length; i ++)
+			if (obj[i] != null)
+				obj[i].draw(g2, this);
+		
+		// Draw player
 		player.draw(g2);
 		g2.dispose();   // Dispose g2 in order to save resources
 	}
