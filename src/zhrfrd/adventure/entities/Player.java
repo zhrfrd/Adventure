@@ -121,6 +121,7 @@ public class Player extends Entity {
 		
 		switch (objectName) {
 			case "Key":
+				gp.playSoundEffect(1);
 				keyCount ++;
 				gp.obj[index] = null;
 				
@@ -128,12 +129,19 @@ public class Player extends Entity {
 				
 			case "Door":   // Open doors only when you pick up the key
 				if (keyCount > 0) {
+					gp.playSoundEffect(3);
 					gp.obj[index] = null;
 					keyCount --;
 				}
 					
 				break;
 		
+			case "Boots":    // Increase player's speed when picking up the boots
+				gp.playSoundEffect(2);
+				speed += 1;
+				gp.obj[index] = null;
+				
+				break;
 		}
 	}
 	

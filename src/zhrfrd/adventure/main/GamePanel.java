@@ -23,8 +23,6 @@ public class GamePanel extends JPanel implements Runnable {
 	//World Settings
 	public final int MAX_WORLD_COL = 50;
 	public final int MAX_WORLD_ROW = 50;
-	public final int WORLD_WIDTH = TILE_SIZE * MAX_WORLD_COL;
-	public final int WORLD_HEIGHT = TILE_SIZE * MAX_WORLD_ROW;
 	
 	final int FPS = 60;
 	Thread gameThread;
@@ -34,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public Player player = new Player(this, keyHandler);
 	public SuperObject obj[] = new SuperObject[10];
 	public AssetSetter assetSetter= new AssetSetter(this);
+	public Sound sound = new Sound();
 	
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -48,6 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
 	 */
 	public void setupGame() {
 		assetSetter.setObject();
+		playSoundTrack(0);   // Play sound-track
 	}
 	
 	/*
@@ -63,6 +63,30 @@ public class GamePanel extends JPanel implements Runnable {
 	 */
 	public void update() {
 		player.update();
+	}
+	
+	/*
+	 * Play sound-track
+	 */
+	public void playSoundTrack(int i) {
+		sound.setFile(i);
+		sound.play();
+		sound.loop();
+	}
+	
+	/*
+	 * Stop sound-track
+	 */
+	public void stopSoundTrack() {
+		sound.stop();
+	}
+	
+	/*
+	 * Play sound effect
+	 */
+	public void playSoundEffect(int i) {
+		sound.setFile(i);
+		sound.play();
 	}
 	
 	/*
