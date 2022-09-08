@@ -14,7 +14,7 @@ public class Player extends Entity {
 	GamePanel gp;
 	KeyHandler keyHandler;
 	public final int SCREEN_X, SCREEN_Y;   // Position of the player of the screen
-	int keyCount = 0;
+	public int keyCount = 0;
 	
 	public Player(GamePanel gp, KeyHandler keyHandler) {
 		this.gp = gp;
@@ -124,6 +124,7 @@ public class Player extends Entity {
 				gp.playSoundEffect(1);
 				keyCount ++;
 				gp.obj[index] = null;
+				gp.ui.showMessage("You got a key!");
 				
 				break;
 				
@@ -132,14 +133,26 @@ public class Player extends Entity {
 					gp.playSoundEffect(3);
 					gp.obj[index] = null;
 					keyCount --;
+					gp.ui.showMessage("You opened the door!");
 				}
+				
+				else
+					gp.ui.showMessage("You need a key!");
 					
 				break;
 		
-			case "Boots":    // Increase player's speed when picking up the boots
+			case "Boots":   // Increase player's speed when picking up the boots
 				gp.playSoundEffect(2);
 				speed += 1;
 				gp.obj[index] = null;
+				gp.ui.showMessage("Speed up!");
+				
+				break;
+				
+			case "Chest":   // When you get the chest you win the game. The game will stop
+				gp.ui.gameFinished = true;
+				gp.soundTrack.stop();
+				gp.playSoundEffect(4);
 				
 				break;
 		}

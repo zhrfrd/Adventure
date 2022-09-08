@@ -34,6 +34,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public AssetSetter assetSetter= new AssetSetter(this);
 	public Sound soundTrack = new Sound();
 	public Sound soundEffect = new Sound();
+	public UI ui = new UI(this);
 	
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -109,6 +110,10 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		// Draw player
 		player.draw(g2);
+		
+		// Draw UI
+		ui.draw(g2);
+		
 		g2.dispose();   // Dispose g2 in order to save resources
 	}
 
