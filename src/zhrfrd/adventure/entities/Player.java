@@ -15,6 +15,8 @@ public class Player extends Entity {
 	KeyHandler keyHandler;
 	public final int SCREEN_X, SCREEN_Y;   // Position of the player of the screen
 	public int keyCount = 0;
+	boolean moving = false;
+	int pixelCounter = 0;
 	
 	public Player(GamePanel gp, KeyHandler keyHandler) {
 		this.gp = gp;
@@ -22,7 +24,7 @@ public class Player extends Entity {
 		SCREEN_X = gp.SCREEN_WIDTH / 2 - (gp.TILE_SIZE / 2);    // Player in the middle of the screen
 		SCREEN_Y = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);   //
 		
-		solidArea = new Rectangle(8, 16, 32, 32);   // Rectangle solid area of the player
+		solidArea = new Rectangle(1, 1, 46, 46);   // Rectangle solid area of the player
 		solidAreaDefaultX = solidArea.x;
 		solidAreaDefaultY = solidArea.y;
 		setDefaultValues();
@@ -58,31 +60,41 @@ public class Player extends Entity {
 	}
 	
 	/*
-	 * Update player information
+	 * Update player information such as position
 	 */
 	public void update() {
-		// Get keyboard strokes and update player position
-		if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed) {
-			if (keyHandler.upPressed)
-				direction = "up";
+		// Tile based movement. The player doesn't stop until it reaches the end of the tile
+		if (!moving) {
+			// Get keyboard strokes and update player position
+			if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.leftPressed || keyHandler.rightPressed) {
+				if (keyHandler.upPressed)
+					direction = "up";
+				
+				if (keyHandler.downPressed)
+					direction = "down";
+				
+				if (keyHandler.leftPressed)
+					direction = "left";
+				
+				if (keyHandler.rightPressed)
+					direction = "right";
+				
+				moving = true;
+				collisionOn = false;
+				gp.collisionChecker.checkTile(this);   // Check the tile collision
+				
+				int objIndex = gp.collisionChecker.checkObject(this, true);   // Check if player collided with an object and save the object index
+				
+				if (objIndex != 999)   // If the player collided with an existing object, pick it up
+					pickUpObject(objIndex);	
+			}
 			
-			if (keyHandler.downPressed)
-				direction = "down";
-			
-			if (keyHandler.leftPressed)
-				direction = "left";
-			
-			if (keyHandler.rightPressed)
-				direction = "right";
-			
-			collisionOn = false;
-			gp.collisionChecker.checkTile(this);   // Check the tile collision
-			
-			int objIndex = gp.collisionChecker.checkObject(this, true);   // Check if player collided with an object and save the object index
-			
-			if (objIndex != 999)   // If the player collided with an existing object, pick it up
-				pickUpObject(objIndex);
-			
+			// When the player stops moving, reset the sprite to the default one
+			else
+				spriteNumber = 1;
+		}
+		
+		else {
 			// Move the player only in case there is no collision detected
 			if (collisionOn == false) {
 				if (direction == "up")
@@ -109,6 +121,14 @@ public class Player extends Entity {
 					spriteNumber = 1;
 				
 				spriteCounter = 0;
+			}
+			
+			pixelCounter += speed;
+			
+			// Stop player movement only when it reacher the end of the tile
+			if (pixelCounter == 48) {
+				moving = false;
+				pixelCounter = 0;
 			}
 		}
 	}

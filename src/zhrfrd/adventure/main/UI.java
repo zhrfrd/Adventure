@@ -42,7 +42,7 @@ public class UI {
 	 * Draw UI elements in the panel (don't instantiate here. Since  draw(Graphics2D g2) will be called 60 times per seconds it will affect the performance of the game)
 	 */
 	public void draw(Graphics2D g2) {
-		// Display a congratulation message when you win the game and display in the center of the screen
+		// Display a congratulation message when you win the game and display it in the centre of the screen
 		if (gameFinished) {
 			String text;
 			int textLength;
