@@ -139,7 +139,7 @@ public class Player extends Entity {
 			
 			pixelCounter += speed;
 			
-			// Stop player movement only when it reacher the end of the tile
+			// Stop player movement only when it reaches the end of the tile
 			if (pixelCounter == 48) {
 				moving = false;
 				pixelCounter = 0;
@@ -177,7 +177,7 @@ public class Player extends Entity {
 		
 			case "Boots":   // Increase player's speed when picking up the boots
 				gp.playSoundEffect(2);
-				speed += 1;
+				speed += 2;
 				gp.obj[index] = null;
 				gp.ui.showMessage("Speed up!");
 				
