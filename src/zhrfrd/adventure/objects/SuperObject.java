@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import zhrfrd.adventure.main.GamePanel;
+import zhrfrd.adventure.main.UtilityTool;
 
 public class SuperObject {
 	public BufferedImage image;
@@ -14,6 +15,7 @@ public class SuperObject {
 	public Rectangle solidArea = new Rectangle(0, 0, 48, 48);   // Default solid area for the super object which covers the whole sprite area. Can be changed inside the specific object class 
 	public int solidAreaDefaultX = 0;
 	public int solidAreaDefaultY = 0;
+	UtilityTool utilityTool = new UtilityTool();
 	
 	/*
 	 * Draw the objects on the screen

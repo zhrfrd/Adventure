@@ -10,8 +10,9 @@ import zhrfrd.adventure.objects.Key;
 
 public class UI {
 	GamePanel gp;
-	final Font ARIAL_PLAIN_40;   // Objects number
+	final Font ARIAL_PLAIN_20;   // Debug message
 	final Font ARIAL_PLAIN_30;   // Pop-up notification
+	final Font ARIAL_PLAIN_40;   // Objects number
 	final Font ARIAL_BOLD_80;   // Congratulation message
 	BufferedImage keyImage;
 	public boolean messageOn = false;
@@ -23,10 +24,11 @@ public class UI {
 	
 	public UI(GamePanel gp) {
 		this.gp = gp;
-		ARIAL_PLAIN_40 = new Font("Arial", Font.PLAIN, 40);
+		ARIAL_PLAIN_20 = new Font("Arial", Font.PLAIN, 20);
 		ARIAL_PLAIN_30 = new Font("Arial", Font.PLAIN, 30);
+		ARIAL_PLAIN_40 = new Font("Arial", Font.PLAIN, 40);
 		ARIAL_BOLD_80 = new Font("Arial", Font.BOLD, 80);
-		Key key = new Key();
+		Key key = new Key(gp);
 		keyImage = key.image; 
 	}
 	
@@ -99,5 +101,14 @@ public class UI {
 				}
 			}
 		}
+	}
+	
+	/*
+	 * Display debug message with useful information
+	 */
+	public void showDrawTime(Graphics2D g2, long drawTime) {
+		g2.setFont(ARIAL_PLAIN_20);
+		g2.setColor(Color.white);
+		g2.drawString("Draw time:  " + drawTime + "ns", 10, 500);
 	}
 }

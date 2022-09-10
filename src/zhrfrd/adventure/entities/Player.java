@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import zhrfrd.adventure.main.GamePanel;
 import zhrfrd.adventure.main.KeyHandler;
+import zhrfrd.adventure.main.UtilityTool;
 
 public class Player extends Entity {
 	GamePanel gp;
@@ -45,18 +46,31 @@ public class Player extends Entity {
 	 * Get the sprites of the player
 	 */
 	public void getPlayerImage() {
+		up1 = setup("player_up_1");
+		up2 = setup("player_up_2");
+		down1 = setup("player_down_1");
+		down2 = setup("player_down_2");
+		left1 = setup("player_left_1");
+		left2 = setup("player_left_2");
+		right1 = setup("player_right_1");
+		right2 = setup("player_right_2");
+	}
+	
+	/*
+	 * Handle instantiation, import of images and scaling
+	 */
+	public BufferedImage setup(String imageName) {
+		UtilityTool utilityTool = new UtilityTool();
+		BufferedImage image = null;
+		
 		try {
-			up1 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_1.png"));
-			up2 = ImageIO.read(getClass().getResourceAsStream("/player/player_up_2.png"));
-			down1 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_1.png"));
-			down2 = ImageIO.read(getClass().getResourceAsStream("/player/player_down_2.png"));
-			left1 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_1.png"));
-			left2 = ImageIO.read(getClass().getResourceAsStream("/player/player_left_2.png"));
-			right1 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_1.png"));
-			right2 = ImageIO.read(getClass().getResourceAsStream("/player/player_right_2.png"));
-		} catch (IOException e) {
+			image = ImageIO.read(getClass().getResourceAsStream("/player/" + imageName + ".png"));
+			image = utilityTool.scaleImage(image, gp.TILE_SIZE, gp.TILE_SIZE);
+		} catch(IOException e) {
 			e.printStackTrace();
 		}
+		
+		return image;
 	}
 	
 	/*
@@ -216,6 +230,6 @@ public class Player extends Entity {
 				image = right2;
 		}
 		
-		g2.drawImage(image, SCREEN_X, SCREEN_Y, gp.TILE_SIZE, gp.TILE_SIZE, null);
+		g2.drawImage(image, SCREEN_X, SCREEN_Y, null);
 	}
 }

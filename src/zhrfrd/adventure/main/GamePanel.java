@@ -25,6 +25,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public final int MAX_WORLD_ROW = 50;
 	
 	final int FPS = 60;
+	int drawCount = 0;
+	long drawTime = 0;
 	Thread gameThread;
 	KeyHandler keyHandler = new KeyHandler();
 	TileManager tileManager = new TileManager(this);
@@ -100,6 +102,12 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		Graphics2D g2 = (Graphics2D)g;
 		
+		// Debug performance
+		long drawStart = 0;
+		
+		if (keyHandler.checkDrawTime)
+			drawStart = System.nanoTime();
+		
 		// Draw tiles
 		tileManager.draw(g2);
 		
@@ -113,6 +121,19 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		// Draw UI
 		ui.draw(g2);
+		
+		drawCount ++;
+		// Debug performances 
+		if (keyHandler.checkDrawTime) {
+			if (drawCount % 6 == 0) {
+				long drawEnd = System.nanoTime();
+				long timePassed = drawEnd - drawStart;
+				drawTime = timePassed;
+				
+			}
+			
+			ui.showDrawTime(g2, drawTime);
+		}
 		
 		g2.dispose();   // Dispose g2 in order to save resources
 	}
