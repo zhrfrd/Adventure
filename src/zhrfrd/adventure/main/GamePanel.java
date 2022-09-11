@@ -125,7 +125,8 @@ public class GamePanel extends JPanel implements Runnable {
 		drawCount ++;
 		// Debug performances 
 		if (keyHandler.checkDrawTime) {
-			if (drawCount % 6 == 0) {
+			// Update the time every half second
+			if (drawCount % 30 == 0) {
 				long drawEnd = System.nanoTime();
 				long timePassed = drawEnd - drawStart;
 				drawTime = timePassed;
@@ -134,6 +135,10 @@ public class GamePanel extends JPanel implements Runnable {
 			
 			ui.showDrawTime(g2, drawTime);
 		}
+		
+		// Reset the drawCount when it reaches 1000 to avoid overflow
+		if (drawCount >= 1000)
+			drawCount = 0;
 		
 		g2.dispose();   // Dispose g2 in order to save resources
 	}
