@@ -10,7 +10,7 @@ public class Main {
 		
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);
-		window.setTitle("Adventure game");
+		window.setTitle("Adventure 2");
 		window.add(gp);
 		window.pack();   // Causes the window to be sized to fit the preferred size and layouts of its subcomponents (GamePanel)
 		window.setLocationRelativeTo(null);

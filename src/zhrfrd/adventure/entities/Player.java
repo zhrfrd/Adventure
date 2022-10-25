@@ -15,7 +15,7 @@ public class Player extends Entity {
 	GamePanel gp;
 	KeyHandler keyHandler;
 	public final int SCREEN_X, SCREEN_Y;   // Position of the player of the screen
-	public int keyCount = 0;
+//	public int keyCount = 0;
 	boolean moving = false;
 	int pixelCounter = 0;
 	
@@ -99,8 +99,7 @@ public class Player extends Entity {
 				
 				int objIndex = gp.collisionChecker.checkObject(this, true);   // Check if player collided with an object and save the object index
 				
-				if (objIndex != 999)   // If the player collided with an existing object, pick it up
-					pickUpObject(objIndex);	
+				pickUpObject(objIndex);	
 			}
 			
 			// When the player stops moving, reset the sprite to the default one
@@ -151,44 +150,9 @@ public class Player extends Entity {
 	 * Remove object from the map and add it to the player inventory
 	 */
 	public void pickUpObject(int index) {
-		String objectName = gp.obj[index].name;
-		
-		switch (objectName) {
-			case "Key":
-				gp.playSoundEffect(1);
-				keyCount ++;
-				gp.obj[index] = null;
-				gp.ui.showMessage("You got a key!");
-				
-				break;
-				
-			case "Door":   // Open doors only when you pick up the key
-				if (keyCount > 0) {
-					gp.playSoundEffect(3);
-					gp.obj[index] = null;
-					keyCount --;
-					gp.ui.showMessage("You opened the door!");
-				}
-				
-				else
-					gp.ui.showMessage("You need a key!");
-					
-				break;
-		
-			case "Boots":   // Increase player's speed when picking up the boots
-				gp.playSoundEffect(2);
-				speed += 2;
-				gp.obj[index] = null;
-				gp.ui.showMessage("Speed up!");
-				
-				break;
-				
-			case "Chest":   // When you get the chest you win the game. The game will stop
-				gp.ui.gameFinished = true;
-				gp.soundTrack.stop();
-				gp.playSoundEffect(4);
-				
-				break;
+		// If the player collided with an existing object, pick it up
+		if (index != 999) {
+			
 		}
 	}
 	
